@@ -11,6 +11,7 @@
       font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
       background: #e2e8f0;
     }
+    
     /* AR 모드에서도 화면 위에 유지되는 UI 오버레이 */
     #ui-overlay {
       position: fixed; inset: 0;
@@ -18,9 +19,7 @@
       display: flex; flex-direction: column; justify-content: space-between;
       z-index: 10;
     }
-    .interactive-panel {
-      pointer-events: auto;
-    }
+    .interactive-panel { pointer-events: auto; }
 
     /* 상단 헤더 및 모드 전환 탭 */
     .top-bar {
@@ -30,84 +29,56 @@
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
       display: flex; flex-direction: column; gap: 8px;
     }
-    .tab-group {
-      display: flex; gap: 8px; max-width: 480px; width: 100%; margin: 0 auto;
-    }
+    .tab-group { display: flex; gap: 8px; max-width: 480px; width: 100%; margin: 0 auto; }
     .tab-btn {
       flex: 1; padding: 10px; border: 2px solid #2563eb; border-radius: 10px;
       background: #ffffff; color: #2563eb; font-weight: bold; font-size: 15px;
       cursor: pointer; transition: 0.15s;
     }
-    .tab-btn.active {
-      background: #2563eb; color: #ffffff;
-    }
-    #guide-msg {
-      text-align: center; font-size: 13px; color: #334155; font-weight: 600;
-    }
+    .tab-btn.active { background: #2563eb; color: #ffffff; }
+    #guide-msg { text-align: center; font-size: 13px; color: #334155; font-weight: 600; }
 
-    /* 하단 컨트롤 패널 (AR 버튼 위쪽에 배치) */
+    /* 하단 컨트롤 패널 */
     .bottom-bar {
       background: rgba(255, 255, 255, 0.94);
       backdrop-filter: blur(8px);
-      padding: 14px 16px 76px 16px; /* Three.js ARButton 공간 확보 */
+      padding: 14px 16px 76px 16px; 
       border-radius: 20px 20px 0 0;
       box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
       max-width: 540px; width: 100%; margin: 0 auto;
     }
 
     /* 전개도 슬라이더 UI */
-    .slider-row {
-      display: flex; align-items: center; gap: 12px;
-    }
-    .slider-row label {
-      font-weight: bold; font-size: 14px; color: #1e293b; white-space: nowrap;
-    }
-    input[type="range"] {
-      flex: 1; height: 8px; accent-color: #2563eb; cursor: pointer;
-    }
-    .percent-badge {
-      min-width: 46px; text-align: right; font-weight: bold; color: #2563eb; font-size: 15px;
-    }
-    .color-legend {
-      margin-top: 8px; font-size: 12px; color: #475569; text-align: center;
-    }
+    .slider-row { display: flex; align-items: center; gap: 12px; }
+    .slider-row label { font-weight: bold; font-size: 14px; color: #1e293b; white-space: nowrap; }
+    input[type="range"] { flex: 1; height: 8px; accent-color: #2563eb; cursor: pointer; }
+    .percent-badge { min-width: 46px; text-align: right; font-weight: bold; color: #2563eb; font-size: 15px; }
+    .color-legend { margin-top: 8px; font-size: 12px; color: #475569; text-align: center; }
 
     /* 쌓기나무 조작 UI */
-    .block-controls {
-      display: flex; align-items: center; justify-content: space-between; gap: 8px;
-    }
-    .action-group {
-      display: flex; gap: 6px;
-    }
+    .block-controls { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .action-group { display: flex; gap: 6px; }
     .mode-pill {
       padding: 9px 14px; border-radius: 20px; border: 2px solid #cbd5e1;
       background: #f8fafc; font-weight: bold; font-size: 14px; cursor: pointer;
     }
-    .mode-pill.add.active {
-      background: #16a34a; color: white; border-color: #16a34a;
-    }
-    .mode-pill.remove.active {
-      background: #dc2626; color: white; border-color: #dc2626;
-    }
+    .mode-pill.add.active { background: #16a34a; color: white; border-color: #16a34a; }
+    .mode-pill.remove.active { background: #dc2626; color: white; border-color: #dc2626; }
     .reset-btn {
       padding: 9px 12px; border-radius: 10px; border: 1px solid #94a3b8;
       background: white; color: #334155; font-weight: bold; font-size: 13px; cursor: pointer;
     }
-    .count-box {
-      font-size: 15px; font-weight: bold; color: #0f172a;
-    }
-    .count-box span {
-      color: #d97706; font-size: 18px;
-    }
+    .count-box { font-size: 15px; font-weight: bold; color: #0f172a; }
+    .count-box span { color: #d97706; font-size: 18px; }
     .hidden { display: none !important; }
   </style>
 
-  <!-- Three.js 최신 모듈 Import Map -->
+  <!-- 안정적인 unpkg CDN을 통한 Three.js 로드 -->
   <script type="importmap">
     {
       "imports": {
-        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
       }
     }
   </script>
@@ -115,7 +86,7 @@
 <body>
 
   <div id="ui-overlay">
-    <!-- 상단 탭 영역 -->
+    <!-- 상단 탭 -->
     <div class="top-bar interactive-panel">
       <div class="tab-group">
         <button id="tab-net" class="tab-btn active">1. 전개도 접기</button>
@@ -124,9 +95,9 @@
       <div id="guide-msg">슬라이더를 움직여 정육면체 전개도를 접어보세요!</div>
     </div>
 
-    <!-- 하단 컨트롤 영역 -->
+    <!-- 하단 패널 -->
     <div class="bottom-bar interactive-panel">
-      <!-- 모드 1: 전개도 접기 패널 -->
+      <!-- 전개도 접기 패널 -->
       <div id="panel-net">
         <div class="slider-row">
           <label for="fold-slider">펼치기</label>
@@ -134,12 +105,10 @@
           <label for="fold-slider">접기</label>
           <div class="percent-badge" id="fold-percent">0%</div>
         </div>
-        <div class="color-legend">
-          💡 마주 보는 평행한 면끼리 같은 색(파랑·빨강·초록)으로 표시됩니다.
-        </div>
+        <div class="color-legend">💡 마주 보는 평행한 면끼리 같은 색으로 표시됩니다.</div>
       </div>
 
-      <!-- 모드 2: 쌓기나무 패널 -->
+      <!-- 쌓기나무 패널 -->
       <div id="panel-blocks" class="hidden">
         <div class="block-controls">
           <div class="action-group">
@@ -158,7 +127,245 @@
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
     import { ARButton } from 'three/addons/webxr/ARButton.js';
 
-    // 1. 기본 씬, 카메라, 렌더러 설정
+    // 1. 기본 설정
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.01, 20);
-    camera.position.set(0.18, 0.24, 0.28); // PC 미리보기용 카메라 위치
+    camera.position.set(0.18, 0.24, 0.28); 
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.xr.enabled = true;
+    document.body.appendChild(renderer.domElement);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.target.set(0, 0.03, 0);
+    controls.enableDamping = true;
+    controls.update();
+
+    scene.add(new THREE.AmbientLight(0xffffff, 0.85));
+    const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    dirLight.position.set(0.5, 1.2, 0.8);
+    scene.add(dirLight);
+
+    // WebXR 터치 충돌 방지
+    const uiOverlay = document.getElementById('ui-overlay');
+    document.querySelectorAll('.interactive-panel').forEach(panel => {
+      panel.addEventListener('beforexrselect', (e) => e.preventDefault());
+    });
+
+    // AR 버튼 생성
+    const arButton = ARButton.createButton(renderer, {
+      requiredFeatures: ['hit-test'],
+      optionalFeatures: ['dom-overlay'],
+      domOverlay: { root: uiOverlay }
+    });
+    document.body.appendChild(arButton);
+
+    // 2. AR 조준원 및 스테이지 그룹
+    const reticle = new THREE.Mesh(
+      new THREE.RingGeometry(0.04, 0.055, 32).rotateX(-Math.PI / 2),
+      new THREE.MeshBasicMaterial({ color: 0x22c55e, side: THREE.DoubleSide })
+    );
+    reticle.matrixAutoUpdate = false;
+    reticle.visible = false;
+    scene.add(reticle);
+
+    const stageGroup = new THREE.Group();
+    scene.add(stageGroup);
+    const UNIT = 0.05; // 5cm
+
+    // ==========================================
+    // [모드 1] 전개도
+    // ==========================================
+    const netGroup = new THREE.Group();
+    stageGroup.add(netGroup);
+
+    function createFaceMesh(colorHex) {
+      const geo = new THREE.PlaneGeometry(UNIT, UNIT);
+      geo.rotateX(-Math.PI / 2);
+      const mat = new THREE.MeshStandardMaterial({ color: colorHex, side: THREE.DoubleSide, roughness: 0.4 });
+      const mesh = new THREE.Mesh(geo, mat);
+      const edges = new THREE.EdgesGeometry(geo);
+      mesh.add(new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0x0f172a, linewidth: 2 })));
+      return mesh;
+    }
+
+    const COLOR_TB = 0x3b82f6; // 파랑 (위/아래)
+    const COLOR_FB = 0xef4444; // 빨강 (앞/뒤)
+    const COLOR_LR = 0x22c55e; // 초록 (좌/우)
+
+    const bottomFace = createFaceMesh(COLOR_TB); bottomFace.position.y = 0.001; netGroup.add(bottomFace);
+    const frontPivot = new THREE.Group(); frontPivot.position.set(0, 0.001, UNIT / 2);
+    const frontFace = createFaceMesh(COLOR_FB); frontFace.position.set(0, 0, UNIT / 2); frontPivot.add(frontFace); netGroup.add(frontPivot);
+    const backPivot = new THREE.Group(); backPivot.position.set(0, 0.001, -UNIT / 2);
+    const backFace = createFaceMesh(COLOR_FB); backFace.position.set(0, 0, -UNIT / 2); backPivot.add(backFace); netGroup.add(backPivot);
+    const topPivot = new THREE.Group(); topPivot.position.set(0, 0, -UNIT);
+    const topFace = createFaceMesh(COLOR_TB); topFace.position.set(0, 0, -UNIT / 2); topPivot.add(topFace); backPivot.add(topPivot);
+    const leftPivot = new THREE.Group(); leftPivot.position.set(-UNIT / 2, 0.001, 0);
+    const leftFace = createFaceMesh(COLOR_LR); leftFace.position.set(-UNIT / 2, 0, 0); leftPivot.add(leftFace); netGroup.add(leftPivot);
+    const rightPivot = new THREE.Group(); rightPivot.position.set(UNIT / 2, 0.001, 0);
+    const rightFace = createFaceMesh(COLOR_LR); rightFace.position.set(UNIT / 2, 0, 0); rightPivot.add(rightFace); netGroup.add(rightPivot);
+
+    const foldSlider = document.getElementById('fold-slider');
+    const foldPercent = document.getElementById('fold-percent');
+
+    foldSlider.addEventListener('input', (e) => {
+      const ratio = e.target.value / 100;
+      const angle = ratio * (Math.PI / 2);
+      frontPivot.rotation.x = -angle; backPivot.rotation.x = angle; topPivot.rotation.x = angle;
+      leftPivot.rotation.z = -angle; rightPivot.rotation.z = angle;
+      foldPercent.textContent = `${e.target.value}%`;
+    });
+
+    // ==========================================
+    // [모드 2] 쌓기나무
+    // ==========================================
+    const blocksGroup = new THREE.Group();
+    blocksGroup.visible = false;
+    stageGroup.add(blocksGroup);
+
+    function createWoodTexture() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 128; canvas.height = 128;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#eab308'; ctx.fillRect(0, 0, 128, 128);
+      ctx.fillStyle = '#d97706'; for (let i = 0; i < 128; i += 8) ctx.fillRect(0, i, 128, 2);
+      ctx.strokeStyle = '#78350f'; ctx.lineWidth = 6; ctx.strokeRect(0, 0, 128, 128);
+      return new THREE.CanvasTexture(canvas);
+    }
+    const woodMaterial = new THREE.MeshStandardMaterial({ map: createWoodTexture(), roughness: 0.6 });
+    const blockGeo = new THREE.BoxGeometry(UNIT, UNIT, UNIT);
+    const blockEdgesGeo = new THREE.EdgesGeometry(blockGeo);
+    const blockLineMat = new THREE.LineBasicMaterial({ color: 0x451a03 });
+
+    const basePlane = new THREE.Mesh(new THREE.PlaneGeometry(UNIT * 5, UNIT * 5).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0xcbd5e1, side: THREE.DoubleSide, transparent: true, opacity: 0.6 }));
+    blocksGroup.add(basePlane);
+    const gridHelper = new THREE.GridHelper(UNIT * 5, 5, 0x334155, 0x64748b); gridHelper.position.y = 0.0005; blocksGroup.add(gridHelper);
+
+    const blockMap = new Map();
+    const blockCountEl = document.getElementById('block-count');
+
+    function addBlock(gx, gy, gz) {
+      if (gx < -2 || gx > 2 || gz < -2 || gz > 2 || gy < 0 || gy > 6) return;
+      const key = `${gx},${gy},${gz}`;
+      if (blockMap.has(key)) return;
+      const mesh = new THREE.Mesh(blockGeo, woodMaterial);
+      mesh.position.set(gx * UNIT, gy * UNIT + UNIT / 2, gz * UNIT);
+      mesh.userData = { gx, gy, gz, isBlock: true };
+      mesh.add(new THREE.LineSegments(blockEdgesGeo, blockLineMat));
+      blocksGroup.add(mesh); blockMap.set(key, mesh); blockCountEl.textContent = blockMap.size;
+    }
+
+    function removeBlock(mesh) {
+      const { gx, gy, gz } = mesh.userData;
+      const key = `${gx},${gy},${gz}`;
+      if (blockMap.has(key)) { blocksGroup.remove(mesh); blockMap.delete(key); blockCountEl.textContent = blockMap.size; }
+    }
+
+    function resetBlocks() {
+      blockMap.forEach(mesh => blocksGroup.remove(mesh)); blockMap.clear();
+      [[0,0,0],[0,1,0],[0,2,0],[1,0,0],[1,1,0],[0,0,1]].forEach(([x,y,z]) => addBlock(x,y,z));
+    }
+    resetBlocks();
+
+    // ==========================================
+    // UI 로직
+    // ==========================================
+    let currentTab = 'net', blockAction = 'add';
+    const tabNet = document.getElementById('tab-net'), tabBlocks = document.getElementById('tab-blocks');
+    const panelNet = document.getElementById('panel-net'), panelBlocks = document.getElementById('panel-blocks');
+    const guideMsg = document.getElementById('guide-msg');
+
+    tabNet.addEventListener('click', () => {
+      currentTab = 'net'; tabNet.classList.add('active'); tabBlocks.classList.remove('active');
+      panelNet.classList.remove('hidden'); panelBlocks.classList.add('hidden');
+      netGroup.visible = true; blocksGroup.visible = false;
+      guideMsg.textContent = '슬라이더를 움직여 정육면체 전개도를 접어보세요!';
+    });
+
+    tabBlocks.addEventListener('click', () => {
+      currentTab = 'blocks'; tabBlocks.classList.add('active'); tabNet.classList.remove('active');
+      panelBlocks.classList.remove('hidden'); panelNet.classList.add('hidden');
+      netGroup.visible = false; blocksGroup.visible = true;
+      guideMsg.textContent = '바닥이나 나무 블록을 터치하여 쌓거나 빼보세요!';
+    });
+
+    const btnAdd = document.getElementById('btn-add'), btnRemove = document.getElementById('btn-remove');
+    btnAdd.addEventListener('click', () => { blockAction = 'add'; btnAdd.classList.add('active'); btnRemove.classList.remove('active'); });
+    btnRemove.addEventListener('click', () => { blockAction = 'remove'; btnRemove.classList.add('active'); btnAdd.classList.remove('active'); });
+    document.getElementById('btn-reset').addEventListener('click', resetBlocks);
+
+    // ==========================================
+    // 터치 인터랙션 (블록 쌓기)
+    // ==========================================
+    const raycaster = new THREE.Raycaster(), pointer = new THREE.Vector2();
+    let downX = 0, downY = 0;
+    window.addEventListener('pointerdown', (e) => { downX = e.clientX; downY = e.clientY; });
+    window.addEventListener('pointerup', (e) => {
+      if (e.target.closest('.interactive-panel') || Math.hypot(e.clientX - downX, e.clientY - downY) > 10) return;
+
+      if (renderer.xr.isPresenting && !isPlacedInAR && reticle.visible) {
+        stageGroup.position.setFromMatrixPosition(reticle.matrix);
+        stageGroup.visible = true; isPlacedInAR = true; reticle.visible = false;
+        guideMsg.textContent = currentTab === 'net' ? '슬라이더를 움직여 정육면체 전개도를 접어보세요!' : '바닥이나 나무 블록을 터치하여 쌓거나 빼보세요!';
+        return;
+      }
+      if (currentTab !== 'blocks') return;
+
+      pointer.x = (e.clientX / window.innerWidth) * 2 - 1; pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
+      camera.updateMatrixWorld(); raycaster.setFromCamera(pointer, camera);
+      const intersects = raycaster.intersectObjects([...blockMap.values(), basePlane], false);
+
+      if (intersects.length > 0) {
+        const hit = intersects[0];
+        if (blockAction === 'remove' && hit.object.userData.isBlock) removeBlock(hit.object);
+        else if (blockAction === 'add') {
+          if (hit.object.userData.isBlock) addBlock(hit.object.userData.gx + Math.round(hit.face.normal.x), hit.object.userData.gy + Math.round(hit.face.normal.y), hit.object.userData.gz + Math.round(hit.face.normal.z));
+          else if (hit.object === basePlane) {
+            const localPt = blocksGroup.worldToLocal(hit.point.clone());
+            addBlock(Math.round(localPt.x / UNIT), 0, Math.round(localPt.z / UNIT));
+          }
+        }
+      }
+    });
+
+    // ==========================================
+    // WebXR 히트 테스트 루프
+    // ==========================================
+    let hitTestSource = null, hitTestSourceRequested = false, isPlacedInAR = false;
+    renderer.xr.addEventListener('sessionstart', () => {
+      isPlacedInAR = false; stageGroup.visible = false;
+      guideMsg.textContent = '카메라로 책상을 비춘 뒤, 초록 원이 뜨면 화면을 터치하세요!';
+    });
+    renderer.xr.addEventListener('sessionend', () => {
+      hitTestSourceRequested = false; hitTestSource = null; isPlacedInAR = false;
+      reticle.visible = false; stageGroup.position.set(0, 0, 0); stageGroup.visible = true;
+    });
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    renderer.setAnimationLoop((timestamp, frame) => {
+      if (frame) {
+        const referenceSpace = renderer.xr.getReferenceSpace(), session = renderer.xr.getSession();
+        if (!hitTestSourceRequested) {
+          session.requestReferenceSpace('viewer').then((viewerSpace) => {
+            session.requestHitTestSource({ space: viewerSpace }).then((source) => { hitTestSource = source; });
+          });
+          session.addEventListener('end', () => { hitTestSourceRequested = false; hitTestSource = null; });
+          hitTestSourceRequested = true;
+        }
+        if (hitTestSource && !isPlacedInAR) {
+          const hitTestResults = frame.getHitTestResults(hitTestSource);
+          if (hitTestResults.length > 0) {
+            reticle.visible = true; reticle.matrix.fromArray(hitTestResults[0].getPose(referenceSpace).transform.matrix);
+          } else reticle.visible = false;
+        }
+      } else controls.update();
+      renderer.render(scene, camera);
+    });
+  </script>
+</body>
+</html>
